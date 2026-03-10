@@ -1,0 +1,28 @@
+services:
+  cassandra:
+    image: cassandra:5.0
+    container_name: cassandra-db
+    ports:
+      - "9042:9042"
+    environment:
+      CASSANDRA_CLUSTER_NAME: url-shortener-cluster
+    volumes:
+      - cassandra_data:/var/lib/cassandra
+    networks:
+      - cassandra-network
+
+  cassandra-admin:
+    image: nuvo/docker-cqlsh
+    container_name: cassandra-admin
+    stdin_open: true
+    tty: true
+    depends_on:
+      - cassandra
+    networks:
+      - cassandra-network
+
+volumes:
+  cassandra_data:
+
+networks:
+  cassandra-network:
