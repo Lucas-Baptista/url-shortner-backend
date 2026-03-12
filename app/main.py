@@ -1,16 +1,9 @@
+from dotenv import load_dotenv
+load_dotenv()
+
 from fastapi import FastAPI
+from app.url.routes.url_routes import router as url_router
 
 app = FastAPI()
 
-
-@app.get("/")
-def home():
-    return {"message": "API rodando 🚀"}
-
-
-@app.get("/users")
-def get_users():
-    return [
-    {"id": 1, "name": "Lucas"},
-    {"id": 2, "name": "Maria"}
-    ]
+app.include_router(url_router)

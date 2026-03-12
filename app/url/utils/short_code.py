@@ -1,8 +1,13 @@
 import os
 from hashids import Hashids
 
+salt = os.getenv("HASHIDS_SALT")
+
+if not salt:
+    raise ValueError("HASHIDS_SALT is not defined in environment variables")
+
 hashids = Hashids(
-    salt=os.getenv("HASHIDS_SALT"),
+    salt=salt,
     alphabet="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
     min_length=5,
 )
