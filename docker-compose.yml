@@ -21,6 +21,12 @@ services:
     networks:
       - cassandra-network
 
+  redis:
+    image: redis:7
+    container_name: redis-db
+    ports:
+      - "6379:6379"
+
 volumes:
   cassandra_data:
 
