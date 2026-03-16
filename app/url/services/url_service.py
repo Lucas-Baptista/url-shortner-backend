@@ -39,7 +39,7 @@ class UrlService:
         if not url:
             return None
 
-        cache_url(url)
+        cache_url(url, short_code)
         
         self.repository.increment_click(short_code)
 
