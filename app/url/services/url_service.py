@@ -20,7 +20,7 @@ class UrlService:
         url = UrlEntity(
             short_code=short_code,
             original_url=str(original_url),
-            created_at=datetime.utcnow()
+            created_at=datetime.now()
         )
 
         self.repository.save(url)
