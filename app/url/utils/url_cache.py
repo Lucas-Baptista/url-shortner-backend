@@ -39,8 +39,6 @@ def get_cached_url(short_code: str) -> UrlEntity | None:
     replica = random.randint(1, cache_replicas)
     key = _build_key(short_code, replica)
 
-    print("CACHE TRY:", key)
-
     data = redis.get(key)
 
     if not data:

@@ -1,25 +1,33 @@
-.PHONY: setup install dev run db-up db-wait db-init down lint format test
+.PHONY: setup install dev run db-up redis-up infra-up db-wait db-init down lint format test
 
 APP=app.main:app
 CASSANDRA_CONTAINER=cassandra-db
+REDIS_CONTAINER=redis
 SCHEMA=app/database/schema.cql
 
-setup: install db-up db-wait db-init
+setup: install infra-up db-wait db-init
 	@echo "Environment ready 🚀"
 
 install:
 	@echo "Installing dependencies..."
 	pip install -r requirements.txt
 
-dev: db-up db-wait db-init run
+dev: infra-up db-wait db-init run
 
 run:
 	@echo "Starting API..."
 	uvicorn $(APP) --reload
 
+# 🔥 Infra (Cassandra + Redis)
+infra-up: db-up redis-up
+
 db-up:
 	@echo "Starting Cassandra..."
 	docker compose up -d cassandra
+
+redis-up:
+	@echo "Starting Redis..."
+	docker compose up -d redis
 
 db-wait:
 	@echo "Waiting for Cassandra to be ready..."
@@ -50,4 +58,7 @@ test:
 	pytest
 
 db-shell:
-	docker exec -it cassandra-db cqlsh -k url_shortener
+	docker exec -it $(CASSANDRA_CONTAINER) cqlsh -k url_shortener
+
+redis-shell:
+	docker exec -it $(REDIS_CONTAINER) redis-cli
