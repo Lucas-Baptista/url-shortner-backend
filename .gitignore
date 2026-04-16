@@ -19,3 +19,7 @@ venv/
 
 # Logs
 *.log
+
+# Coverage
+.coverage 
+htmlcov/
