@@ -97,7 +97,7 @@ Cria uma URL encurtada a partir de uma URL original.
     "created_at": "2026-04-16T10:50:25.557003"
 }
 ```
-
+```mermaid
 flowchart TD
     A[1. Client POST /shorten] --> B[2. API / WebServer]
 
@@ -115,6 +115,7 @@ flowchart TD
     H --> I[9. Response DTO]
 
     I --> J[10. Return Response to Client]
+```  
 
 ### GET /{shortcode}   
 
